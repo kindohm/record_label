@@ -8,6 +8,8 @@ const models = require('./data/models');
 const generator = require('./data/generator');
 
 const indexRouter = require('./routes/index');
+const artistsRouter = require('./routes/artists');
+const albumsRouter = require('./routes/albums');
 
 const app = express();
 
@@ -20,10 +22,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/artists', artistsRouter);
+app.use('/albums', albumsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
