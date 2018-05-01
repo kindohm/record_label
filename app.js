@@ -10,6 +10,7 @@ const generator = require('./data/generator');
 const indexRouter = require('./routes/index');
 const artistsRouter = require('./routes/artists');
 const albumsRouter = require('./routes/albums');
+const resetRouter = require('./routes/reset');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/artists', artistsRouter);
 app.use('/albums', albumsRouter);
+app.use('/reset', resetRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,6 +47,5 @@ app.use(function(err, req, res, next) {
 });
 
 mongoose.connect('mongodb://localhost:27017/record_label');
-generator.clear().then(generator.generate);
 
 module.exports = app;

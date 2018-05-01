@@ -57,7 +57,7 @@ const generate = () => {
 
     console.log('generating new data');
 
-    words.fillAll()
+    return words.fillAll()
         .then(() => {
             const artistCount = getRandomIntInclusive(10, 50);
             for (let i = 0; i < artistCount; i++) {
@@ -77,6 +77,7 @@ const generate = () => {
                         }
                     });
             }
+            return;
         });
 };
 
