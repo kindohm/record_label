@@ -53,3 +53,13 @@ desired
 grey
 red
 dead
+happy
+sad
+reptilian
+ambitious
+ambiguous
+seared
+stoned
+careless
+young
+weekend

@@ -49,3 +49,9 @@ problems
 experiences
 teachers
 pupils
+weekends
+elements
+particles
+monitors
+churches
+words

@@ -44,3 +44,8 @@ breathing
 drowning
 judging
 choosing
+forging
+blinding
+waiting
+wondering
+making

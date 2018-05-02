@@ -45,3 +45,8 @@ blinds
 attacks
 cleans
 bathes
+makes
+waits
+breathes
+closes
+marks

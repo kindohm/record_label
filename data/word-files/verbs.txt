@@ -37,3 +37,12 @@ cast
 stare
 push
 ignore
+mark
+wait
+speak
+shove
+wonder
+ache
+adapt
+detect
+carry
