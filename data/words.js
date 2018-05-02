@@ -1,17 +1,12 @@
 const Promise = require("bluebird");
+const getRandomIntInclusive = require('./shared').getRandomIntInclusive;
 
-const getRandomIntInclusive = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const singularNouns = [];
-const pluralNouns = [];
-const verbs = [];
-const ingVerbs = [];
-const presentVerbs = [];
-const adjectives = [];
+let singularNouns = [];
+let pluralNouns = [];
+let verbs = [];
+let ingVerbs = [];
+let presentVerbs = [];
+let adjectives = [];
 
 const fill = (target, path) => {
     return new Promise((accept, reject) => {
@@ -21,7 +16,7 @@ const fill = (target, path) => {
 
         lineReader.on('line', function (line) {
             if (line.trim() !== '')
-            target.push(line);
+                target.push(line);
         });
 
         lineReader.on('close', () => {
@@ -36,6 +31,13 @@ const getRandom = (target) => {
 
 module.exports = {
     fillAll: () => {
+        singularNouns = [];
+        pluralNouns = [];
+        verbs = [];
+        ingVerbs = [];
+        presentVerbs = [];
+        adjectives = [];
+
         return Promise.all([
             fill(pluralNouns, 'data/word-files/nouns-plural.txt'),
             fill(singularNouns, 'data/word-files/nouns-singular.txt'),
