@@ -92,10 +92,10 @@ const generate = () => {
         .then(() => {
             const newArtists = [];
             const newAlbums = [];
-            const artistCount = getRandomIntInclusive(10, 50);
+            const artistCount = getRandomIntInclusive(20, 50);
             for (let i = 0; i < artistCount; i++) {
                 newArtists.push(makeArtist());
-                const albumCount = getRandomIntInclusive(1, 5);
+                const albumCount = getRandomIntInclusive(1, 7);
                 for (let a = 0; a < albumCount; a++) {
                     newAlbums.push(makeAlbum(newArtists[newArtists.length - 1]));
                 }
