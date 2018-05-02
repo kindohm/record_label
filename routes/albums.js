@@ -5,26 +5,32 @@ const _ = require('lodash');
 
 router.get('/', function (req, res, next) {
 
-    let query = {};
+    let query = {    };
 
     if (req.query.artistId){
         query.artistId = req.query.artistId
     }
 
-    models.Album.find(query).exec()
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (parseInt(req.query.page) || 0) * limit;
+
+    let options = {
+        skip,
+        limit
+    };
+
+    models.Album.find(query, null, options).exec()
         .then(results => {
             const mapped = results.map(result => {
                 return {
-                    id: result._id,
                     title: result.title,
                     artistId: result.artistId,
-                    releaseDate: result.releaseDate
+                    releaseDate: result.releaseDate,
+                    tracks: result.tracks
                 };
             });
-
             return res.json(_.sortBy(mapped, item => item.releaseDate));
         });
-
 });
 
 module.exports = router;

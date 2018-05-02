@@ -1,3 +1,4 @@
+const uuidv4 = require('uuid/v4');
 const models = require('./models');
 const words = require('./words');
 const moment = require('moment');
@@ -53,31 +54,60 @@ const makeName = (addThe) => {
     return name;
 }
 
+const makeArtist = () => {
+    const artist = new models.Artist();
+    artist.name = makeName();
+    artist.artistId = uuidv4();
+    return artist;
+};
+
+const makeTrack = () => {
+
+    const newName = makeName();
+    if (Math.random > 0.98) {
+        newName += ` (${makeName()})`;
+    }
+    return newName;
+}
+
+const makeAlbum = (artist) => {
+    const album = new models.Album();
+    album.artistId = artist.artistId;
+    album.title = makeName();
+    album.releaseDate = moment().subtract(getRandomIntInclusive(1, 1000), 'days').toDate();
+
+    const trackCount = getRandomIntInclusive(2, 15);
+    for (let t = 0; t < trackCount; t++) {
+        album.tracks.push(makeTrack());
+    }
+
+    return album;
+};
+
 const generate = () => {
 
     console.log('generating new data');
 
     return words.fillAll()
         .then(() => {
+            const newArtists = [];
+            const newAlbums = [];
             const artistCount = getRandomIntInclusive(10, 50);
             for (let i = 0; i < artistCount; i++) {
-                const artist = new models.Artist();
-                artist.name = makeName();
-                console.log(`Saving new artist ${artist.name}`);
-                artist.save()
-                    .then(newArtist => {
-                        const albumCount = getRandomIntInclusive(1,10);
-                        for (let a = 0; a < albumCount; a++){
-                            const album = new models.Album();
-                            album.artistId = newArtist._id;
-                            album.title = makeName();
-                            album.releaseDate = moment().subtract(getRandomIntInclusive(1,1000), 'days').toDate();
-                            console.log(`new album: ${album.title}`);
-                            album.save();
-                        }
-                    });
+                newArtists.push(makeArtist());
+                const albumCount = getRandomIntInclusive(1, 5);
+                for (let a = 0; a < albumCount; a++) {
+                    newAlbums.push(makeAlbum(newArtists[newArtists.length - 1]));
+                }
             }
-            return;
+
+            const calls = [
+                models.Album.collection.insert(newAlbums),
+                models.Artist.collection.insert(newArtists)
+            ];
+
+            console.log(`Creating ${newArtists.length} artists and ${newAlbums.length} albums.`);
+            return Promise.all(calls);
         });
 };
 

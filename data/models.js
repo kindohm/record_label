@@ -4,13 +4,15 @@ const Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
  
 const Album = new Schema({
- artistId: ObjectId,
+ artistId: String,
  title: String,
- releaseDate: Date
+ releaseDate: Date,
+ tracks: [String]
 });
 
 const Artist = new Schema({
-    name: String
+    name: String,
+    artistId: String
 });
 
 module.exports = {

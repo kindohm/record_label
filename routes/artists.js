@@ -8,8 +8,8 @@ router.get('/', function (req, res, next) {
     .then(results => {
         res.json(results.map(result => {
             return {
-                id: result._id,
-                name: result.name
+                name: result.name,
+                artistId: result.artistId
             };
         }));
     });
